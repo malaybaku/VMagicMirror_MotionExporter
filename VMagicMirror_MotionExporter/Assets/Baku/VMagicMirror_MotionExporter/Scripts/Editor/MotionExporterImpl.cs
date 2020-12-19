@@ -21,7 +21,7 @@ namespace Baku.VMagicMirror.MotionExporter
             if (!clip.humanMotion)
             {
                 Debug.LogError("(EN) Please check Humanoid Animation flag");
-                Debug.LogError("(JP) アニメーションがHumanoid用ではありません。クリップ設定を確認して下さい。");
+                Debug.LogError("(JP) アニメーションがHumanoid用ではありません。アニメーションの設定を確認して下さい。");
                 return null;
             }
 
@@ -78,9 +78,7 @@ namespace Baku.VMagicMirror.MotionExporter
 
         private static void WriteKeyFrameBytes(Keyframe keyframe, BinaryWriter writer)
         {
-            //NOTE: 現状だと冗長な変換だけど、値のちょっとした変換とかがはさまる可能性があるのでこういう体裁。
             var item = SerializeKeyFrame(keyframe);
-            
             writer.Write(item.time);
             writer.Write(item.value);
             writer.Write(item.inTangent);

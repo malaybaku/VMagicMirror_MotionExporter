@@ -176,9 +176,9 @@ GameObject:
   - component: {fileID: 859048284}
   - component: {fileID: 859048289}
   - component: {fileID: 859048288}
+  - component: {fileID: 859048285}
   - component: {fileID: 859048287}
   - component: {fileID: 859048286}
-  - component: {fileID: 859048285}
   m_Layer: 0
   m_Name: MotionTestPlayer
   m_TagString: Untagged
@@ -212,9 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a7729f2f1dd2446a3c06ee5712d65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: WIN00
+  fileName: 
   source: {fileID: 859048286}
-  target: {fileID: 1700918285}
+  target: {fileID: 0}
 --- !u!114 &859048286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,75 +411,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1001 &1178820551
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5458521066860339945, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_Name
-      value: AliciaSolid
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8838245339115133357, guid: 0de0785f65e2f194a83835f53f391bce,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0de0785f65e2f194a83835f53f391bce, type: 3}
 --- !u!1 &1227052149
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,12 +494,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!95 &1700918285 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2851284340533850607, guid: 0de0785f65e2f194a83835f53f391bce,
-    type: 3}
-  m_PrefabInstance: {fileID: 1178820551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2036100726
 GameObject:
   m_ObjectHideFlags: 0
