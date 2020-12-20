@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1147e52c4d722cf4db6746e103050a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exportTarget: {fileID: 7400000, guid: e2538d48c03da46a8b0c3b59d39a4cab, type: 3}
+  exportTarget: {fileID: 0}
 --- !u!4 &39518224
 Transform:
   m_ObjectHideFlags: 0
