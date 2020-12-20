@@ -48,9 +48,6 @@ namespace Baku.VMagicMirror.MotionExporter
                     isPPtrCurve = b.isPPtrCurve,
                     curve = SerializeCurve(AnimationUtility.GetEditorCurve(clip, b)),
                 };
-                
-                Debug.Log($"{item.path}, {item.propertyName}");
-                
                 result.curveBindings.Add(item);                
             }
             return result;
