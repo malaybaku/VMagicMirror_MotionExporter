@@ -117,8 +117,15 @@ namespace Baku.VMagicMirror.MotionExporter
 
         #endregion
 
+        #region IK系のパラメータ
+        
+        //NOTE: 現行実装では活用できてないパラメータですが、データ上は存在するはずなので今のうちから用意しています
+        
         public Vector3 RootT;
         public Quaternion RootQ;
+
+        public Vector3 MotionT;
+        public Quaternion MotionQ;
 
         public Vector3 LeftFootT;
         public Quaternion LeftFootQ;
@@ -130,10 +137,23 @@ namespace Baku.VMagicMirror.MotionExporter
         public Vector3 RightHandT;
         public Quaternion RightHandQ;
 
+        #endregion
+        
         private readonly float[] _muscleArray = new float[95];
         private readonly bool[] _usedMuscleFlags = new bool[95];
 
-        //内部的にプロパティ値を配列に転写する。※ほんとは不要な処理ですが、やらないとコードが難しい事になるのでやってます
+        /// <summary>
+        /// マッスル配列に直接アクセスします。通常は使わないほうがいいです。
+        /// </summary>
+        /// <returns></returns>
+        public float[] GetMuscleArrayReference() => _muscleArray;
+
+        /// <summary>
+        /// 内部的にプロパティ値を配列に転写します。WriteToPoseする前に一回呼ぶ必要があります。
+        /// </summary>
+        /// <remarks>
+        /// ほんとは不要な処理ですが、やらないとコードが難しい事になるのでやってます
+        /// </remarks>
         public void WriteToArray()
         {
             _muscleArray[0] = p0;
@@ -243,6 +263,10 @@ namespace Baku.VMagicMirror.MotionExporter
 
         }
 
+        /// <summary>
+        /// どのマッスル情報を<see cref="WriteToPose"/>で転写すべきかのフラグ一覧をセットします。
+        /// </summary>
+        /// <param name="flags"></param>
         public void SetUsedFlags(bool[] flags)
         {
             if (flags == null || flags.Length != _usedMuscleFlags.Length)
@@ -256,6 +280,10 @@ namespace Baku.VMagicMirror.MotionExporter
             }
         }
         
+        /// <summary>
+        /// 現在のマッスル情報を実際のアバターの姿勢に書き込みます。
+        /// </summary>
+        /// <param name="pose"></param>
         public void WriteToPose(ref HumanPose pose)
         {
             for (int i = 0; i < _muscleArray.Length; i++)
@@ -267,5 +295,21 @@ namespace Baku.VMagicMirror.MotionExporter
             }
         }
         
+        /// <summary>
+        /// 現在のマッスル情報を、指定した比率で実際のアバター姿勢に書き込みます。
+        /// 0を指定すると何もせず、1を指定するとrateを指定しない場合と同じ動きになります。
+        /// </summary>
+        /// <param name="pose"></param>
+        /// <param name="rate"></param>
+        public void WriteToPose(ref HumanPose pose, float rate)
+        {
+            for (int i = 0; i < _muscleArray.Length; i++)
+            {
+                if (_usedMuscleFlags[i])
+                {
+                    pose.muscles[i] = Mathf.Lerp(pose.muscles[i], _muscleArray[i], rate);
+                }
+            }
+        }
     }
 }
