@@ -220,5 +220,42 @@ namespace Baku.VMagicMirror.MotionExporter
         /// <returns></returns>
         public static string GetMuscleIndexPropNameOrAsIs(string propertyName)
             => _propNameRenames.TryGetValue(propertyName, out var name) ? name : propertyName;
+
+        /// <summary>
+        /// マッスルを使う/使わないのフラグについて、ケースに応じてフラグをオフにします。
+        /// 直近の想定用途として「強制的に上半身のみのモーションを作る」という使い方を想定しています。
+        /// </summary>
+        /// <param name="flags"></param>
+        public static void MaskUsedMuscleFlags(bool[] flags, MuscleFlagMaskStyle maskStyle)
+        {
+            if (flags == null || flags.Length < 95)
+            {
+                //マッスルのフラグ一覧ではないものが渡ってきてる→無視
+                return;
+            }
+            
+            switch (maskStyle)
+            {
+                case MuscleFlagMaskStyle.All:
+                    return;
+                case MuscleFlagMaskStyle.OnlyUpperBody:
+                    for (int i = 21; i < 37; i++)
+                    {
+                        flags[i] = false;
+                    }                    
+                    return;
+                default:
+                    return;
+            }
+        }
+    }
+
+    /// <summary> マッスルのフラグをマスクするときの方式一覧 </summary>
+    public enum MuscleFlagMaskStyle
+    {
+        /// <summary> すべて残す = 何もしない </summary>
+        All,
+        /// <summary> 上半身のみ残す = 下半身のボーンは仮にAnimationCurve情報があっても無視する </summary>
+        OnlyUpperBody,
     }
 }

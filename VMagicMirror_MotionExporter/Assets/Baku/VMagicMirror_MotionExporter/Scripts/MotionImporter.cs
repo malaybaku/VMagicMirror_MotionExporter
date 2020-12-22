@@ -44,7 +44,18 @@ namespace Baku.VMagicMirror.MotionExporter
             }            
         }
 
-        public AnimationClip Deserialize(SerializedMotion motion) => DeserializeToClip(motion);
+        //public AnimationClip Deserialize(SerializedMotion motion) => DeserializeToClip(motion);
+        public DeserializedMotionClip Deserialize(SerializedMotion motion) => DeserializeToMotion(motion);
+
+        private static DeserializedMotionClip DeserializeToMotion(SerializedMotion motion)
+        {
+            var result = new DeserializedMotionClip();
+            foreach (var binding in motion.curveBindings)
+            {
+                result.SetCurve(binding.propertyName, DeserializeToCurve(binding.curve));
+            }
+            return result;
+        }
 
         private static AnimationClip DeserializeToClip(SerializedMotion motion)
         {
