@@ -212,7 +212,7 @@ MonoBehaviour:
   fileName: 
   source: {fileID: 859048286}
   target: {fileID: 0}
-  onlyUpperBody: 0
+  onlyUpperBody: 1
 --- !u!114 &859048286
 MonoBehaviour:
   m_ObjectHideFlags: 0
