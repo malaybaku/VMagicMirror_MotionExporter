@@ -7,65 +7,25 @@ namespace Baku.VMagicMirror.MotionExporter
     /// <summary> 文字列化されたモーションデータをランタイムでAnimationClipに戻す処理の実装</summary>
     public class MotionImporter
     {
-        /// <summary> クリップのロード処理が失敗すると例外メッセージを引数にして発火 </summary>
-        public event Action<string> LoadError;
-
-        //NOTE: Exceptionベースにしてもさほど嬉しくないのでエラーイベントを作り、このメソッド自体は例外をスローしません
         /// <summary>
-        /// JSON文字列を指定してアニメーションクリップをロードします。
-        /// ロードに失敗するとnullを返しつつ、<see cref="LoadError"/>イベントに詳細を送信します。
+        /// json文字列を指定してモーション情報として再構成します。JSONのデシリアライズに関する例外がスローされる場合があります。
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public AnimationClip Deserialize(string json)
-        {
-            try
-            {
-                var motion = JsonUtility.FromJson<SerializedMotion>(json);
-                return DeserializeToClip(motion);
-            }
-            catch (Exception ex)
-            {
-                LoadError?.Invoke(ex.Message);
-                return null;
-            }
-        }
+        public SerializedMotion LoadSerializedMotion(string json) 
+            => JsonUtility.FromJson<SerializedMotion>(json);
 
-        public SerializedMotion LoadSerializedMotion(string json)
-        {
-            try
-            {
-                return JsonUtility.FromJson<SerializedMotion>(json);
-            }
-            catch (Exception ex)
-            {
-                LoadError?.Invoke(ex.Message);
-                return null;
-            }            
-        }
-
-        //public AnimationClip Deserialize(SerializedMotion motion) => DeserializeToClip(motion);
-        public DeserializedMotionClip Deserialize(SerializedMotion motion) => DeserializeToMotion(motion);
-
-        private static DeserializedMotionClip DeserializeToMotion(SerializedMotion motion)
+        /// <summary>
+        /// デシリアライズした情報を、更に再生可能なデータに変換します。
+        /// </summary>
+        /// <param name="motion"></param>
+        /// <returns></returns>
+        public DeserializedMotionClip Deserialize(SerializedMotion motion) 
         {
             var result = new DeserializedMotionClip();
             foreach (var binding in motion.curveBindings)
             {
                 result.SetCurve(binding.propertyName, DeserializeToCurve(binding.curve));
-            }
-            return result;
-        }
-
-        private static AnimationClip DeserializeToClip(SerializedMotion motion)
-        {
-            //NOTE: このAnimationClip自体はLegacy Animationになり、
-            //HumanoidAnimationSetterに対して姿勢情報を書き込めるようになるので、
-            //書き込ませた姿勢情報をコピーすればアニメーションが動かせる、という筋立て
-            var result = new AnimationClip();
-            foreach (var binding in motion.curveBindings)
-            {
-                result.SetCurve(binding.path, typeof(HumanoidAnimationSetter), binding.propertyName, DeserializeToCurve(binding.curve));
             }
             return result;
         }

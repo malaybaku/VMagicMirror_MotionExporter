@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Models/MotionExporter_WithMyModel.unity
-    guid: 23a53ea49c1ec734b9fa6f1bb305f34a
+    path: Assets/Baku/VMagicMirror_MotionExporter/Scenes/MotionExporter.unity
+    guid: 3e118b89d78a5df48a35cbf2668e69b3
   m_configObjects: {}
