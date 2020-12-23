@@ -9,13 +9,16 @@ UnityのHumanoid Animationをエディターからシリアライズし、ラン
 
 初期実装の時点ではUnity 2019.4のアニメーションデータに沿った情報をエクスポートするようになっています。
 
-
 A project to serialize Unity Humanoid Motion on editor, and deserialize at runtime.
 
 - Can be thought to be a ligher version of AssetBundle.
 - Dependency is Unity Animation Clip data, and independent to other motion file format (like fbx).
 
 In the first implementation data format is based on Unity 2019.4.14f1.
+
+## Install
+
+Import `.unitypackage` on Releases page.
 
 ## How to Use for VMagicMirror
 
@@ -31,40 +34,44 @@ In the first implementation data format is based on Unity 2019.4.14f1.
 バージョン: Unity 2019.4.x (推奨バージョン: 2019.4.14f)
 
 - エクスポート: エディタ上で適当なGameObjectに`MotionExporter`コンポーネントをアタッチし、エクスポートしたいクリップを指定して`Export`ボタンをクリックすることで、`StreamingAssets`以下にファイルがエクスポートされます。
-- インポート: エクスポートされたデータを`MotionImporter`に読み込ませることで`AnimationClip`を復元します。
-- 実行: 復元したクリップ情報を`HumanoidAnimationSetter`コンポーネントがアタッチされたオブジェクトで再生しつつ、マッスル等のデータをヒューマノイドモデルに転写します。
+- インポート: エクスポートされたデータを`MotionImporter`で読み込んで`DeserializedMotion`を生成します。
+- 実行: `DeserializedMotion`が`AnimationClip`の代替となり、`HumanoidAnimationSetter`が`Animator`の代替となります。
 
-実際にアニメーションをインポート、実行する例として`MotionTestPlay`スクリプトが入っています。
+実際にアニメーションをインポート、実行する例として`MotionTestPlay`スクリプトが入っています。このスクリプトの動作を次のようにして確認できます。
 
+- エクスポート作業を行い、`StreamingAssets`以下にファイルを出力する
+- `Assets/Baku/VMagicMirror_MotionExporter/Scenes/MotionExporter`を開く
 - 適当なヒューマノイドモデルをシーン上に配置する
-- 空のGameObjectを作成し、`HumanoidAnimationSetter`と`MotionTestPlay`コンポーネントを追加
-- `MotionTestPlay`コンポーネントを以下のように設定
+- `MotionTestPlay`コンポーネントを次のように設定する
     - `FileName`: エクスポートしたファイルの名称
-    - `Source`: このオブジェクト自身
-    - `Target`: ヒューマノイドモデル
-- エディタ上、またはシーンをビルドして実行する
+    - `Target`: シーン上に配置したヒューマノイド
+    - `OnlyUpperBody`: 上半身のモーションだけ再生したい場合は`true` 
+- エディタ上で実行する。または、シーンをビルドして実行する
+
 
 ### EN 
 
 Version: Unity 2019.4.x (recommended2019.4.14f)
 
 - Export: Add `MotionExporter` component to some GameObject on the scene, and set AnimationClip to export, then click `Export` on the component to save the data in `StreamingAssets` folder.
-- Import: `MotionImporter` class does it.
-- Run: Play imported clip on a GameObject with `HumanoidAnimationSetter` component, and copy the pose data including Muscle to model.
+- Import: `MotionImporter` class translate serialized json to `DeserializedMotion`.
+- Run: `DeseiralizedMotion` works like `AnimationClip` and `HumanoidAnimationSetter` is an alternative of `Animator`.
 
+`MotionTestPlay` scripts is an example, and you can test it by following steps.
 
-`MotionTestPlay` script is an example to run animation. 
-
-- Put a humanoid model onto the scene. Confirm the `Animator` component's `Animator Controller` is set `None`.
-- Create an empty GameObject, and add `HumanoidAnimationSetter` component and `MotionTestPlay` component to it.
-- Setup `MotionTestPlay`:
+- Follow Export step to get output file in `StreamingAssets` folder.
+- Open `Assets/Baku/VMagicMirror_MotionExporter/Scenes/MotionExporter`
+- Put a humanoid model on the scene
+- Setup `MotionTestPlay`
     - `FileName`: Exported file name
-    - `Source`: Self
-    - `Target`: Humanoid model object
-- Play on the editor, or play by build the scene.
+    - `Target`: Humanoid object in the scene
+    - `OnlyUpperBody`: Turn on if you want to play only upper body motion
+- Run in editor, or build to play.
 
 
 ## OSS License
+
+*NOTE*: If you are using just `.unitypackage` in Releases you can ignore the license note of UniVRM. The original project (before exported) contains UPM definition to import UniVRM, so if you clone the project itself you will use UniVRM.
 
 [UniVRM](https://github.com/vrm-c/UniVRM)
 
@@ -72,31 +79,6 @@ MIT License
 
 Copyright (c) 2020 VRM Consortium
 Copyright (c) 2018 Masataka SUMI for MToon
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-[Simple Animation](https://github.com/Unity-Technologies/SimpleAnimation)
-
-MIT License
-
-Copyright (c) 2017 Unity Technologies
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
