@@ -38,6 +38,12 @@ namespace Baku.VMagicMirror.MotionExporter
                 return;
             }
 
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            foreach (var invalidChar in invalidChars)
+            {
+                clipName = clipName.Replace(invalidChar, '_');
+            }
+
             string json = JsonUtility.ToJson(motion);
             var filePath = Path.Combine(
                 Application.streamingAssetsPath,

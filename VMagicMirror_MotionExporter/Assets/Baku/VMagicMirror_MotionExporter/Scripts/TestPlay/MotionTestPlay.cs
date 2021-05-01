@@ -62,7 +62,7 @@ namespace Baku.VMagicMirror.MotionExporter
 
             //何も対策しないとhipsが徐々にずれることが多いので、それを防ぐ
             _hips.localPosition = _originHipPos;
-            if (!onlyUpperBody)
+            if (onlyUpperBody)
             {
                 //上半身のみ動作の場合、hipsの回転があると下半身が丸ごと動いてしまうため、それは禁止する
                 _hips.localRotation = _originHipRot;
